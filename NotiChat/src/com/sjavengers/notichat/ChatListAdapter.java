@@ -1,7 +1,12 @@
 package com.sjavengers.notichat;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.*;
 import android.graphics.Color;
+import android.support.v4.app.NotificationCompat;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,10 +21,14 @@ public class ChatListAdapter extends FirebaseListAdapter<Chat> {
 
     // The username for this client. We use this to indicate which messages originated from this user
     private String username;
+    
+    // The activity
+    private Activity activity;
 
     public ChatListAdapter(Query ref, Activity activity, int layout, String username) {
         super(ref, Chat.class, layout, activity);
         this.username = username;
+        this.activity = activity;
     }
 
     /**
@@ -40,7 +49,27 @@ public class ChatListAdapter extends FirebaseListAdapter<Chat> {
             authorText.setTextColor(Color.RED);
         } else {
             authorText.setTextColor(Color.BLUE);
+            notify("Test");
         }
         ((TextView)view.findViewById(R.id.message)).setText(chat.getMessage());
+    }
+    
+    public void notify(String input)
+	{		
+		Intent intent = new Intent(this.activity, NotificationReceiver.class);
+		PendingIntent pIntent = PendingIntent.getActivity(this.activity, 0, intent, 0);
+		
+		Notification n  = new Notification.Builder(this.activity)
+        .setContentTitle("New Message")
+        .setContentText(input)
+        .setSmallIcon(R.drawable.firebase_logo)
+        .setContentIntent(pIntent)
+        .setAutoCancel(true)
+        .addAction(R.drawable.firebase_logo, "Reply", pIntent).build();
+		
+		NotificationManager notificationManager = 
+				  (NotificationManager) this.activity.getSystemService("notification");
+
+		notificationManager.notify(0, n); 
     }
 }

@@ -1,6 +1,10 @@
 package com.sjavengers.notichat;
 
 import android.app.ListActivity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.os.Bundle;
@@ -12,6 +16,7 @@ import android.widget.*;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.ValueEventListener;
+import com.sjavengers.notichat.NotificationReceiver;
 import com.sjavengers.notichat.R;
 
 import java.util.Random;
@@ -37,7 +42,7 @@ public class MainActivity extends ListActivity {
         setTitle("Chatting as " + username);
 
         // Setup our Firebase ref
-        ref = new Firebase(FIREBASE_URL).child("muwahaha");
+        ref = new Firebase(FIREBASE_URL).child("chat");
 
         // Setup our input methods. Enter key on the keyboard or pushing the send button
         EditText inputText = (EditText)findViewById(R.id.messageInput);
@@ -108,7 +113,7 @@ public class MainActivity extends ListActivity {
         if (username == null) {
             //Random r = new Random();
             // Assign a random user name if we don't have one saved.
-            username = "Banlet";
+            username = "InterPol";
             //+ r.nextInt(100000);
             prefs.edit().putString("username", username).commit();
         }
@@ -121,8 +126,8 @@ public class MainActivity extends ListActivity {
             // Create our 'model', a Chat object
             Chat chat = new Chat(input, username);
             // Create a new, auto-generated child of that chat location, and save our chat data there
-            ref.push().setValue(chat);
-            inputText.setText("");
+            ref.push().setValue(chat);            
+            inputText.setText("");            
         }
     }
 }

@@ -60,6 +60,6 @@ public class SimpleIntentService extends IntentService {
 		NotificationManager notificationManager = 
 				  (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
-	//			notificationManager.notify(0, n); 
+				notificationManager.notify(0, n); 
     }
 }
