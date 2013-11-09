@@ -1,1 +1,0 @@
-NotiBuddy - Notification Engine
