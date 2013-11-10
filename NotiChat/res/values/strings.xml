@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="message">Press a Button to Demonstrate How IntentService Works</string>
-    <string name="app_name">IntentServiceBasics</string>
-    <string name="IntentServiceButtonLabel">Run IntentService Test (Good Design)</string>
-    <string name="MainThreadButtonLabel">Run Main Thread Test (Bad Design)</string>
-    <string name="TurnOn">Turn On NotiBuddy</string>
-    <string name="ActiveOn">Make me the Active Device</string>
+
+    <string name="app_name">NotiChat</string>
+
 </resources>
