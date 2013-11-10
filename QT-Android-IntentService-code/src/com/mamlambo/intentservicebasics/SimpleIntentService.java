@@ -1,21 +1,25 @@
 package com.mamlambo.intentservicebasics;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.mamlambo.intentservicebasics.IntentServiceBasicsActivity.ResponseReceiver;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
 import com.mamlambo.intentservicebasics.R;
 
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.os.SystemClock;
-import android.text.format.DateFormat;
-import android.util.Log;
 
 public class SimpleIntentService extends IntentService {
     public static final String PARAM_IN_MSG = "imsg";
@@ -26,40 +30,67 @@ public class SimpleIntentService extends IntentService {
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
-
-        String msg = intent.getStringExtra(PARAM_IN_MSG);
-        SystemClock.sleep(1000); // 30 seconds
-        String resultTxt = msg + " "
-            + DateFormat.format("MM/dd/yy h:mmaa", System.currentTimeMillis());
-        Log.i("SimpleIntentService", "Handling msg: " + resultTxt);
-
-        Intent broadcastIntent = new Intent();
-        broadcastIntent.setAction(ResponseReceiver.ACTION_RESP);
-        broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
-        broadcastIntent.putExtra(PARAM_OUT_MSG, resultTxt);
-        sendBroadcast(broadcastIntent);
-        notifyConnectionStatus();
+    protected void onHandleIntent(Intent intent) 
+    {    
+        Thread thread = new Thread(new Runnable(){
+    		@Override
+    	    public void run() {
+    	        try {
+    	        	// Create a new HttpClient and Post Header
+    	            HttpClient httpclient = new DefaultHttpClient();
+    	            HttpPost httppost = new HttpPost("http://ec2-54-219-159-251.us-west-1.compute.amazonaws.com/notibuddyServer/index.php/devActive");
+    	            
+    	            try {
+    	                // Add your data
+    	                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+    	                nameValuePairs.add(new BasicNameValuePair("deviceId", "15"));
+    	                nameValuePairs.add(new BasicNameValuePair("userId", "9"));
+    	                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+    	                
+    	                // Execute HTTP Post Request
+    	                HttpResponse response = httpclient.execute(httppost);
+    	                int httpStatusCode = response.getStatusLine().getStatusCode();
+    	    	         System.out.println("Code is " + httpStatusCode);
+    	                
+    	            } catch (ClientProtocolException e) {
+    	                // TODO Auto-generated catch block
+    	            } catch (IOException e) {
+    	                // TODO Auto-generated catch block
+    	            }
+    	        } catch (Exception e) {
+    	            e.printStackTrace();
+    	        }
+    		}
+    	});
+    	
+    	thread.start();
+    	notifyActivityStatus();
     }
     
-	private void notifyConnectionStatus()
+	private void notifyActivityStatus()
 	{		
 		Intent intent = new Intent(this, NotificationReceiver.class);
 		PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
 		
 		Notification n  = new Notification.Builder(this)
-        .setContentTitle("New mail from " + "test@gmail.com")
-        .setContentText("Subject")
+        .setContentTitle("Activity Update")
+        .setContentText("This device is currently the active one.")
         .setSmallIcon(R.drawable.icon)
         .setContentIntent(pIntent)
-        .setAutoCancel(true)
-        .addAction(R.drawable.icon, "Call", pIntent)
-        .addAction(R.drawable.icon, "More", pIntent)
-        .addAction(R.drawable.icon, "And more", pIntent).build();
+        .setAutoCancel(true).build();
 		
 		NotificationManager notificationManager = 
 				  (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-				notificationManager.notify(0, n); 
+		
+		for(int i=0; i<6; i++)
+		{
+			notificationManager.notify(0, n);
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
     }
 }

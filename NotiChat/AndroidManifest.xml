@@ -15,6 +15,7 @@
         android:icon="@drawable/firebase_logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <service android:name="GetNotificationsService"></service>
         <activity
             android:name="com.sjavengers.notichat.MainActivity"
             android:label="@string/app_name"

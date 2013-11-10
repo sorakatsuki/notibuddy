@@ -49,7 +49,7 @@ public class ChatListAdapter extends FirebaseListAdapter<Chat> {
             authorText.setTextColor(Color.RED);
         } else {
             authorText.setTextColor(Color.BLUE);
-            notify("Test");
+   //         notify(chat.getMessage());
         }
         ((TextView)view.findViewById(R.id.message)).setText(chat.getMessage());
     }

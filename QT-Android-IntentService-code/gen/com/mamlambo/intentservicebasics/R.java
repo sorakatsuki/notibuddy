@@ -21,6 +21,7 @@ public final class R {
         public static final int main=0x7f030000;
     }
     public static final class string {
+        public static final int ActiveOn=0x7f050005;
         public static final int IntentServiceButtonLabel=0x7f050002;
         public static final int MainThreadButtonLabel=0x7f050003;
         public static final int TurnOn=0x7f050004;

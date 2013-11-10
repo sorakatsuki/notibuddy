@@ -39,9 +39,8 @@ public class IntentServiceBasicsActivity extends Activity {
         // Launch an intent service to do some async work
         Intent msgIntent = new Intent(this, SimpleIntentService.class);
         startService(msgIntent);
-        Intent notifIntent = new Intent(this, DetectNotifications.class);
-        Log.v("Activity", "About to start service");
-        startService(notifIntent);
+   //     Intent notifIntent = new Intent(this, DetectNotifications.class);
+//        startService(notifIntent);
     }
 
     public class ResponseReceiver extends BroadcastReceiver {

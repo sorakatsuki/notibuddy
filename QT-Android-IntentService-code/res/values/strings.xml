@@ -5,4 +5,5 @@
     <string name="IntentServiceButtonLabel">Run IntentService Test (Good Design)</string>
     <string name="MainThreadButtonLabel">Run Main Thread Test (Bad Design)</string>
     <string name="TurnOn">Turn On NotiBuddy</string>
+    <string name="ActiveOn">Make me the Active Device</string>
 </resources>

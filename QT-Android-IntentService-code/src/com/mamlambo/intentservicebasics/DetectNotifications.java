@@ -19,7 +19,7 @@ public class DetectNotifications extends AccessibilityService
 {	
 	@Override
 	public void onAccessibilityEvent(AccessibilityEvent event) {
-	    if (event.getEventType() == AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED) {
+	  /*  if (event.getEventType() == AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED) {
 	 //   	Toast.makeText(getApplicationContext(),
 	   // 			"test",
 	    //			Toast.LENGTH_LONG).show();
@@ -34,7 +34,7 @@ public class DetectNotifications extends AccessibilityService
 	  //      Notification notification = (Notification) event.getParcelableData();
 	        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
 	        notificationManager.cancelAll();
-	    }
+	    }*/
 	}
 
 	@Override
