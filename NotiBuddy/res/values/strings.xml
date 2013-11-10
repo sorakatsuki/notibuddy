@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Noti buddy</string>
+    <string name="action_settings">Settings</string>
+ 	
+    <string name="intro">Notibuddy makes your life easier! 
+        \nIt delivers notifications to a mobile device which placed most close to you.</string>
+   
+    <string name="newcome">START!</string>
+    <string name="developer">©fluffy, sexy, handsome, sunshine</string>
+    
+    <string name="signIn">Sign in!</string>
+    <string name="signUp">Sign up!</string>
+    
+    <string name="hello_world">Hello world!</string>
+	<string name="email">Enter your email</string>
+	<string name="password">Type password</string>
+	<string name="password2">Retype password</string>
+   	<string name="signUpBtn">Sign UP!</string>
+	
+	<string name="deviceList">Your Device List</string>
+	<string name="deviceList1">Soya Galaxy S4</string>
+	<string name="deviceList2">GT-N5110</string>
+	<string name="deviceList3">htc_one</string>
+		
+		
+	<string name="signUpalert">If you dont have a account, sign up now!</string>
+	<string name="activate">Activate your device</string>
+	<color name="yellow">#FFD700</color> 
+
+</resources>
